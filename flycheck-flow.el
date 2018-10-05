@@ -148,13 +148,13 @@ See URL `http://flowtype.org/'."
     :modes (js-mode js-jsx-mode js2-mode js2-jsx-mode js3-mode web-mode rjsx-mode))
 
 
-(flycheck-define-checker javascript-flow-focus
+(flycheck-define-checker javascript-flow-check
     "A JavaScript syntax and style checker using Flow.
 
 See URL `http://flowtype.org/'."
     :command (
               "flow"
-              "focus-check"
+              "check"
               (eval flycheck-javascript-flow-args)
               "--json"
               "--from" "emacs"
@@ -209,7 +209,7 @@ See URL `http://flowtype.org/'."
   :modes (js-mode js-jsx-mode js2-mode js2-jsx-mode js3-mode rjsx-mode))
 
 (add-to-list 'flycheck-checkers 'javascript-flow)
-(add-to-list 'flycheck-checkers 'javascript-flow-focus)
+(add-to-list 'flycheck-checkers 'javascript-flow-check)
 (add-to-list 'flycheck-checkers 'javascript-flow-coverage t)
 
 ;; allows eslint checks such as unused variables in addition to javascript-flow checker
