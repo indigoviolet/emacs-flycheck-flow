@@ -138,10 +138,29 @@ See URL `http://flowtype.org/'."
               "--from" "emacs"
               "--color=never"
               ;; pass in relative filename so that the flow inside the docker can find it
-              (eval (file-relative-name (buffer-file-name) (projectile-project-root)))
-              ;; source-original
+              ;; (eval (file-relative-name (buffer-file-name) (projectile-project-root)))
+              source-original
               )
     :standard-input t
+    :predicate flycheck-flow--predicate
+    :error-parser flycheck-flow--parse-json
+    ;; js3-mode doesn't support jsx
+    :modes (js-mode js-jsx-mode js2-mode js2-jsx-mode js3-mode web-mode rjsx-mode))
+
+
+(flycheck-define-checker javascript-flow-focus
+    "A JavaScript syntax and style checker using Flow.
+
+See URL `http://flowtype.org/'."
+    :command (
+              "flow"
+              "focus-check"
+              (eval flycheck-javascript-flow-args)
+              "--json"
+              "--from" "emacs"
+              "--color=never"
+              source-original
+              )
     :predicate flycheck-flow--predicate
     :error-parser flycheck-flow--parse-json
     ;; js3-mode doesn't support jsx
@@ -159,8 +178,8 @@ See URL `http://flowtype.org/'."
             "--from" "emacs"
             "--path"
             ;; pass in relative filename so that the flow inside the docker can find it
-            (eval (file-relative-name (buffer-file-name) (projectile-project-root)))
-            ;; source-original
+            ;; (eval (file-relative-name (buffer-file-name) (projectile-project-root)))
+            source-original
             )
   :standard-input t
   :predicate flycheck-flow--predicate
@@ -190,6 +209,7 @@ See URL `http://flowtype.org/'."
   :modes (js-mode js-jsx-mode js2-mode js2-jsx-mode js3-mode rjsx-mode))
 
 (add-to-list 'flycheck-checkers 'javascript-flow)
+(add-to-list 'flycheck-checkers 'javascript-flow-focus)
 (add-to-list 'flycheck-checkers 'javascript-flow-coverage t)
 
 ;; allows eslint checks such as unused variables in addition to javascript-flow checker
